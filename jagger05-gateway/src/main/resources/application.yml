@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: GateWay-Application
+  cloud:
+    gateway:
+      routes:
+        - id: CHINA-MICROSERVICE
+          uri: http://localhost:8082/
+          predicates:
+              - Path=/china/**
+        - id: INDIA-MICROSERVICE
+          uri: http://localhost:8083/
+          predicates:
+              - Path=/india/**
+        - id: USA-MICROSERVICE
+          uri: http://localhost:8084/
+          predicates:
+              - Path=/usa/**  
+        - id: AGGREGATE-MICROSERVICE
+          uri: http://localhost:8081/
+          predicates:
+              - Path=/population/**      
+server:
+  port: 8085
+  
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl: 
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost  
